@@ -58,6 +58,9 @@ Untitled
 # Ignore IDE specific folders
 .idea/
 
+# Ignore env files
+.env
+
 # Ignore development tools files
 .byebug_history
 dump.rdb
