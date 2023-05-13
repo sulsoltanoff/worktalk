@@ -1,13 +1,20 @@
-development:
+default: &default
   adapter: redis
+  url: <%= ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379') %>
+  password: <%= ENV.fetch('REDIS_PASSWORD', nil).presence %>
+  ssl_params:
+    verify_mode: <%= Worktalk.redis_ssl_verify_mode %>
+  channel_prefix: <%= "worktalk_#{Rails.env}_action_cable"  %>
+
+development:
+  <<: *default
 
 test:
   adapter: test
+  channel_prefix: <%= "worktalk_#{Rails.env}_action_cable"  %>
+
+staging:
+  <<: *default
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: worktalk_production
-  driver: :ruby
-  ssl_params:
-    verify_mode: <%= OpenSSL::SSL::VERIFY_NONE %>
+  <<: *default
