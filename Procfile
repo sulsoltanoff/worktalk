@@ -1,4 +1,3 @@
-# These are not combined because we want to reload all models after the migrations take place.
-release: bundle exec rails db:migrate; bundle exec rails db:seed
-web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
-worker: bundle exec sidekiq -t 25
+release: POSTGRES_STATEMENT_TIMEOUT=600s bundle exec rails db:worktalk_prepare && echo $SOURCE_VERSION > .git_sha
+web: bundle exec rails ip_lookup:setup && bin/rails server -p $PORT -e $RAILS_ENV
+worker: bundle exec rails ip_lookup:setup && bundle exec sidekiq -C config/sidekiq.yml

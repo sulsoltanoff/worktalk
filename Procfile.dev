@@ -1,5 +1,4 @@
 web: bin/rails server -p 3005
-worker: bundle exec sidekiq -t 25
-js: THEME="light" yarn build --watch
-light-css: yarn light:build:css --watch
-light-mailer-css: yarn light:build:mailer:css --watch
+frontend: bin/webpack-dev-server
+# https://github.com/mperham/sidekiq/issues/3090#issuecomment-389748695
+worker: dotenv bundle exec sidekiq -C config/sidekiq.yml
