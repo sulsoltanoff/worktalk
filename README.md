@@ -18,8 +18,9 @@
 3. Start the application with `bin/dev`.
 4. Visit http://localhost:3000.
 
-## Information about Bullet Train
-If this is your first time working on a Bullet Train application, be sure to review the [Bullet Train Basic Techniques](https://bullettrain.co/docs/getting-started) and the [Bullet Train Developer Documentation](https://bullettrain.co/docs).
+## Project development
+We are use for task tracking YouTrack. Visit to our task-tracker https://soltanoffsul.youtrack.cloud/
+
 
 ### Render
 
