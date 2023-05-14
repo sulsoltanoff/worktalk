@@ -1,23 +1,39 @@
 class Team < ApplicationRecord
-  include Teams::Base
-  include Webhooks::Outgoing::TeamSupport
-  # 🚅 add concerns above.
+  include AccountCacheRevalidator
 
-  # 🚅 add belongs_to associations above.
+  belongs_to :account
+  has_many :team_members, dependent: :destroy_async
+  has_many :members, through: :team_members, source: :user
+  has_many :conversations, dependent: :nullify
 
-  # 🚅 add has_many associations above.
+  validates :name,
+            presence: { message: I18n.t('errors.validations.presence') },
+            uniqueness: { scope: :account_id }
 
-  # 🚅 add oauth providers above.
+  before_validation do
+    self.name = name.downcase if attribute_present?('name')
+  end
 
-  # 🚅 add has_one associations above.
+  def add_member(user_id)
+    team_members.find_or_create_by(user_id: user_id)&.user
+  end
 
-  # 🚅 add scopes above.
+  def remove_member(user_id)
+    team_members.find_by(user_id: user_id)&.destroy!
+  end
 
-  # 🚅 add validations above.
+  def messages
+    account.messages.where(conversation_id: conversations.pluck(:id))
+  end
 
-  # 🚅 add callbacks above.
+  def reporting_events
+    account.reporting_events.where(conversation_id: conversations.pluck(:id))
+  end
 
-  # 🚅 add delegations above.
-
-  # 🚅 add methods above.
+  def push_event_data
+    {
+      id: id,
+      name: name
+    }
+  end
 end
