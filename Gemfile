@@ -123,7 +123,14 @@ gem "bullet_train-obfuscates_id"
 
 gem "devise"
 gem "devise-two-factor"
+gem 'devise-secure_password', git: 'https://github.com/chatwoot/devise-secure_password', branch: 'chatwoot'
+gem 'devise_token_auth'
 gem "rqrcode"
+# authorization
+gem 'jwt'
+gem 'pundit'
+# super admin
+gem 'administrate'
 
 group :development do
   # Open any sent emails in your browser instead of having to setup an SMTP trap.
@@ -180,9 +187,3 @@ gem "active_hash"
 
 # A great debugger.
 gem "pry"
-
-# YOUR GEMS
-# You can add any Ruby gems you need below. By keeping them separate from our gems above, you'll avoid the likelihood
-# that you run into a merge conflict in the future.
-
-# 🚅 super scaffolding will insert new oauth providers above this line.
